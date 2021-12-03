@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table class="merchant-table">
+        <tr>
+            <th>Inactive Merchants</th>
+        </tr>
+        {% for inactive_merchant in inactive_merchants %}
+            <tr>
+                <td>
+                    {{ inactive_merchant.name }}
+                    <form action="/merchants/{{inactive_merchant.id}}/activate" class="activate" method="POST">
+                        <button class="activate-button">Activate</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <ul>
+        <li><a href="/merchants/new">Add New Merchant</a></li>
+        <li><a href="/merchants/inactive">Inactive Merchants</a></li>
+    </ul>
+    <table class="merchant-table">
+        <tr>
+            <th>Merchants</th>
+        </tr>
+        {% for active_merchant in active_merchants %}
+            <tr>
+                <td>
+                    {{ active_merchant.name }}
+                    <a href="/merchants/{{active_merchant.id}}">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock content %}
