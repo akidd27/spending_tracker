@@ -55,3 +55,10 @@ def select(id):
         tag = tag_repository.select(result['tag_id'])
         transaction = Transaction(merchant, tag, result['amount'], result['transaction_date'], result['transaction_time'], result['id'])
     return transaction
+
+#update transaction
+def update(transaction):
+    #sql query and values
+    sql = "UPDATE transactions SET (merchant_id, tag_id, amount, transaction_date, transaction_time) = (%s, %s, %s, %s, %s) WHERE id = %s"
+    values = [transaction.merchant.id, transaction.tag.id, transaction.amount, transaction.date, transaction.time, transaction.id]
+    run_sql(sql, values)
