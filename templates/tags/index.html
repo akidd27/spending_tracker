@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <ul>
+        <li><a href="/tags/new">Add New Tag</a></li>
+        <li><a href="/tags/inactive">Inactive Tags</a></li>
+    </ul>
+    <table class="tag-table">
+        <tr>
+            <th>Tags</th>
+        </tr>
+        {% for active_tag in active_tags %}
+            <tr>
+                <td>
+                    {{ active_tag.name }}
+                    <a href="/tags/{{active_tag.id}}">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock content %}

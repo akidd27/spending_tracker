@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table class="tag-table">
+        <tr>
+            <th>Inactive Tags</th>
+        </tr>
+        {% for inactive_tag in inactive_tags %}
+            <tr>
+                <td>
+                    {{ inactive_tag.name }}
+                    <form action="/tags/{{inactive_tag.id}}/activate" class="activate" method="POST">
+                        <button class="activate-button">Activate</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock content %}
