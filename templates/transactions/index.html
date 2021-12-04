@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <ul>
+        <li><a href="/transactions/new">Add New Transaction</a></li>
+    </ul>
+    <table class="transaction-table">
+        <tr>
+            <th>Transactions</th>
+        </tr>
+        {% for transaction in transactions %}
+            <tr>
+                <td>
+                    {{ transaction.merchant.name }} {{ transaction.tag.name }} {{ '£{:,.2f}'.format(transaction.amount) }} {{ transaction.date }} {{ transaction.time }}
+                    <a href="/transactions/{{transaction.id}}">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock content %}
