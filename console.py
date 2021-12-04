@@ -1,3 +1,4 @@
+from models import merchant
 from models.transaction import Transaction
 from models.merchant import Merchant
 from models.tag import Tag
@@ -20,3 +21,5 @@ date_1 = datetime.date(2021, 12, 4)
 transaction_1 = Transaction(merchant_1, tag_1, 50, date_1, time_1)
 
 transaction_repository.save(transaction_1)
+
+print(transaction_repository.select_all()[0].time)
