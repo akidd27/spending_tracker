@@ -43,6 +43,34 @@ def select(id):
         tag = Tag(result['name'], result['active'], result['id'])
     return tag
 
+#read active/inactive tags
+def select_active(active=True):
+    #create empty tags list
+    active_tags = []
+
+    #sql query and values
+    sql = "SELECT * FROM tags WHERE active = %s"
+    values = [active]
+    results = run_sql(sql, values)
+
+    #create Tag object for each result row and append to list
+    for row in results:
+        tag = Tag(row['name'], row['active'], row['id'])
+        active_tags.append(tag)
+    
+    return active_tags
+
+#check if tag already exists with given name
+#returns True if already exists else False
+def check_by_name(name):
+    sql = "SELECT 1 FROM tags WHERE name = %s"
+    values = [name]
+    result = run_sql(sql, values)
+    if result:
+        return True
+    else:
+        return False
+
 #update tag
 def update(tag):
     #sql query and values
