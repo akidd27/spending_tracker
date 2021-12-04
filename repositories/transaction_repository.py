@@ -1,6 +1,8 @@
 from db.run_sql import run_sql
 from models import transaction
 
+import datetime
+
 from models.transaction import Transaction
 from models.merchant import Merchant
 from models.tag import Tag
@@ -37,4 +39,19 @@ def select_all():
         transactions.append(transaction)
     return transactions
 
+#read by id
+def select(id):
+    transaction = None
 
+    #sql query and id value
+    sql = "SELECT * FROM transactions WHERE id = %s"
+    values = [id]
+    result = run_sql(sql, values)[0]
+
+    #if exists, return Transaction object from query result
+    if result is not None:
+        #create Merchant and Tag objects from row data
+        merchant = merchant_repository.select(result['merchant_id'])
+        tag = tag_repository.select(result['tag_id'])
+        transaction = Transaction(merchant, tag, result['amount'], result['transaction_date'], result['transaction_time'], result['id'])
+    return transaction
