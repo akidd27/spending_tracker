@@ -6,7 +6,7 @@
     </ul>
     <table class="transaction-table">
         <tr>
-            <th>Transactions</th>
+            <th>Transactions - Total: {{ '£{:,.2f}'.format(transactions_total) }}</th>
         </tr>
         {% for transaction in transactions %}
             <tr>

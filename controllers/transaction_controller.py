@@ -2,8 +2,6 @@ from flask import Flask, render_template, request, redirect
 from flask import Blueprint
 
 from models.transaction import Transaction
-from models.tag import Tag
-from models.merchant import Merchant
 
 import repositories.transaction_repository as transaction__repository
 import repositories.merchant_repository as merchant_repository
@@ -15,13 +13,18 @@ transactions_blueprint = Blueprint("transactions", __name__)
 @transactions_blueprint.route("/transactions")
 def transactions():
     transactions = transaction__repository.select_all()
-    return render_template("transactions/index.html", title='My Transactions', transactions=transactions)
+    #create empty var for total
+    transactions_total = 0
+    for transaction in transactions:
+        transactions_total += transaction.amount
+
+    return render_template("transactions/index.html", title='My Transactions', transactions=transactions, transactions_total=transactions_total)
 
 #form to create new transaction
 @transactions_blueprint.route("/transactions/new")
 def new_transaction():
-    merchants = merchant_repository.select_all()
-    tags = tag_repository.select_all()
+    merchants = merchant_repository.select_active()
+    tags = tag_repository.select_active()
     return render_template("/transactions/new.html", title="New Transaction", tags=tags, merchants=merchants)
 
 #add new transaction and return to /transactions
@@ -32,3 +35,7 @@ def add_transaction():
     transaction = Transaction(merchant, tag, request.form['amount'], request.form['date'], request.form['time'])
     transaction__repository.save(transaction)
     return redirect('/transactions')
+
+#delete?
+#delete/clear all? with "are you sure?"
+#Filters: by tag, merchant, date range, sort by date, sort by amount
