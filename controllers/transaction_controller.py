@@ -12,6 +12,8 @@ import repositories.tag_repository as tag_repository
 
 transactions_blueprint = Blueprint("transactions", __name__)
 
+date_sort_newest_first = True
+
 #return sum of amounts in given list of transactions
 def total_of_transactions(transactions):
     transactions_total = 0
@@ -37,7 +39,7 @@ def transactions():
     #get total of all transactions
     transactions_total = total_of_transactions(transactions)
 
-    return render_template("transactions/index.html", title='My Transactions', transactions_sorted=transactions_sorted, transactions_total=transactions_total)
+    return render_template("transactions/index.html", title='My Transactions', transactions_sorted=transactions_sorted, transactions_total=transactions_total, date_sort_newest_first=date_sort_newest_first)
 
 #form to create new transaction
 @transactions_blueprint.route("/transactions/new")
@@ -56,7 +58,20 @@ def add_transaction():
     transaction_repository.save(transaction)
     return redirect('/transactions')
 
-#delete?
-#delete/clear all? with "are you sure?"
-#Filters: by tag, merchant, date range, sort by date, sort by amount
-#min/max for date/time inputs?
+#sort newest or oldest first
+@transactions_blueprint.route('/transactions/sort/sort_by_date', methods=['POST'])
+def sort_transactions():
+    date_sort_newest_first = int(request.form['date_sort_newest_first'])
+    if date_sort_newest_first:
+        return redirect('/transactions')
+    else:
+        #get transactions and sort oldest first
+        transactions = transaction_repository.select_all()
+        transactions_sorted = sort_by_date(transactions, False)
+
+        #get total of all transactions
+        transactions_total = total_of_transactions(transactions)
+
+        return render_template("transactions/index.html", title='My Transactions', transactions_sorted=transactions_sorted, transactions_total=transactions_total, date_sort_newest_first=False)
+
+

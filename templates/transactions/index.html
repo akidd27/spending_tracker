@@ -8,6 +8,21 @@
         <tr>
             <th>Transactions - Total: {{ '£{:,.2f}'.format(transactions_total) }}</th>
         </tr>
+        <tr>
+            Sort by:
+            <form action="/transactions/sort/sort_by_date" method="post">
+                <label for="date_sort_newest_first">Date</label>
+                <select name="date_sort_newest_first" id="date_sort_newest_first">
+                    <option value=1 {% if date_sort_newest_first %}
+                        selected
+                    {% endif %}>Newest First</option>
+                    <option value=0 {% if not date_sort_newest_first %}
+                    selected
+                    {% endif %}>Oldest First</option>
+                </select>
+                <button type="submit">Sort</button>
+            </form> 
+        </tr>
         {% for transaction in transactions_sorted %}
             <tr>
                 <td>
