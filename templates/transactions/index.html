@@ -8,7 +8,7 @@
         <tr>
             <th>Transactions - Total: {{ '£{:,.2f}'.format(transactions_total) }}</th>
         </tr>
-        {% for transaction in transactions %}
+        {% for transaction in transactions_sorted %}
             <tr>
                 <td>
                     {{ transaction.merchant.name }} {{ transaction.tag.name }} {{ '£{:,.2f}'.format(transaction.amount) }} {{ transaction.date }} {{ transaction.time }}
