@@ -29,6 +29,10 @@ def date_time_tuple(transaction):
 def sort_by_date(transactions, newest_first=True):
     return sorted(transactions, key=date_time_tuple, reverse=newest_first)
 
+#sort transactions by amount
+def sort_by_amount(transactions, highest_first=True):
+    return sorted(transactions, key= lambda h: h.amount, reverse=highest_first)
+
 #show all transactions
 @transactions_blueprint.route("/transactions")
 def transactions():
@@ -39,7 +43,7 @@ def transactions():
     #get total of all transactions
     transactions_total = total_of_transactions(transactions)
 
-    return render_template("transactions/index.html", title='My Transactions', transactions_sorted=transactions_sorted, transactions_total=transactions_total, date_sort_newest_first=date_sort_newest_first)
+    return render_template("transactions/index.html", title='My Transactions', transactions_sorted=transactions_sorted, transactions_total=transactions_total, date_sort_newest_first=True, amount_sort_highest_first=True)
 
 #form to create new transaction
 @transactions_blueprint.route("/transactions/new")
@@ -59,19 +63,24 @@ def add_transaction():
     return redirect('/transactions')
 
 #sort newest or oldest first
-@transactions_blueprint.route('/transactions/sort/sort_by_date', methods=['POST'])
+@transactions_blueprint.route('/transactions/sort', methods=['POST'])
 def sort_transactions():
-    date_sort_newest_first = int(request.form['date_sort_newest_first'])
-    if date_sort_newest_first:
-        return redirect('/transactions')
-    else:
-        #get transactions and sort oldest first
-        transactions = transaction_repository.select_all()
-        transactions_sorted = sort_by_date(transactions, False)
 
-        #get total of all transactions
-        transactions_total = total_of_transactions(transactions)
+    #get transactions and total amount
+    transactions = transaction_repository.select_all()
+    transactions_total = total_of_transactions(transactions)
 
-        return render_template("transactions/index.html", title='My Transactions', transactions_sorted=transactions_sorted, transactions_total=transactions_total, date_sort_newest_first=False)
+    if request.form['sort_by'] == 'date':
+        #sort newest/oldest first based on user choice
+        date_sort_newest_first = bool(int(request.form['date_sort_newest_first']))
+        transactions_sorted = sort_by_date(transactions, date_sort_newest_first)
+        amount_sort_highest_first = True
 
+        
+    elif request.form['sort_by'] == 'amount':
+        #sort high-low or low-high based on user choice
+        amount_sort_highest_first = bool(int(request.form['amount_sort_highest_first']))
+        transactions_sorted = sort_by_amount(transactions, amount_sort_highest_first)
+        date_sort_newest_first = True
 
+    return render_template("transactions/index.html", title='My Transactions', transactions_sorted=transactions_sorted, transactions_total=transactions_total, date_sort_newest_first=date_sort_newest_first, amount_sort_highest_first=amount_sort_highest_first)

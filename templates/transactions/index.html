@@ -10,7 +10,7 @@
         </tr>
         <tr>
             Sort by:
-            <form action="/transactions/sort/sort_by_date" method="post">
+            <form action="/transactions/sort" method="post">
                 <label for="date_sort_newest_first">Date</label>
                 <select name="date_sort_newest_first" id="date_sort_newest_first">
                     <option value=1 {% if date_sort_newest_first %}
@@ -20,7 +20,19 @@
                     selected
                     {% endif %}>Oldest First</option>
                 </select>
-                <button type="submit">Sort</button>
+                <button name="sort_by" type="submit" value="date">Sort</button>
+            </form>
+            <form action="/transactions/sort" method="post">
+                <label for="amount_sort_highest_first">Amount</label>
+                <select name="amount_sort_highest_first" id="amount_sort_highest_first">
+                    <option value=1 {% if value_sort_highest_first %}
+                    selected
+                    {% endif %}>High to Low</option>
+                    <option value=0 {% if not amount_sort_highest_first %}
+                    selected
+                {% endif %}>Low to High</option>
+                </select>
+                <button name="sort_by" type="submit" value="amount">Sort</button>
             </form> 
         </tr>
         {% for transaction in transactions_sorted %}
