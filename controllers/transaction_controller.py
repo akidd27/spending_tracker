@@ -9,14 +9,25 @@ import repositories.tag_repository as tag_repository
 
 transactions_blueprint = Blueprint("transactions", __name__)
 
-#show all transactions
-@transactions_blueprint.route("/transactions")
-def transactions():
-    transactions = transaction__repository.select_all()
-    #create empty var for total
+#return sum of amounts in given list of transactions
+def total_of_transactions(transactions):
     transactions_total = 0
     for transaction in transactions:
         transactions_total += transaction.amount
+    return transactions_total
+
+#takes transaction object and returns date and time as tuple
+def date_time_tuple(transaction):
+    return (transaction.date, transaction.time)
+
+#show all transactions
+@transactions_blueprint.route("/transactions")
+def transactions():
+    #get transactions
+    transactions = transaction__repository.select_all()
+
+    #get total of all transactions
+    transactions_total = total_of_transactions(transactions)
 
     return render_template("transactions/index.html", title='My Transactions', transactions=transactions, transactions_total=transactions_total)
 
@@ -39,3 +50,4 @@ def add_transaction():
 #delete?
 #delete/clear all? with "are you sure?"
 #Filters: by tag, merchant, date range, sort by date, sort by amount
+#min/max for date/time inputs?
