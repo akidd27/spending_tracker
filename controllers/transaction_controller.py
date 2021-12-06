@@ -50,21 +50,18 @@ def sort_transactions():
     #get transactions and total amount
     transactions = transaction_repository.select_all()
     transactions_total = total_of_transactions(transactions)
-    transactions_sorted = sort_by_date(transactions)
-    amount_sort_highest_first = True
-    date_sort_newest_first = True
-    # if request.form['sort_by'] == 'date':
-    #     #sort newest/oldest first based on user choice
-    #     date_sort_newest_first = bool(int(request.form['date_sort_newest_first']))
-        # transactions_sorted = sort_by_date(transactions, date_sort_newest_first)
-    #     amount_sort_highest_first = True
 
-        
-    # elif request.form['sort_by'] == 'amount':
-    #     #sort high-low or low-high based on user choice
-    #     amount_sort_highest_first = bool(int(request.form['amount_sort_highest_first']))
-    #     transactions_sorted = sort_by_amount(transactions, amount_sort_highest_first)
-    #     date_sort_newest_first = True
+    if request.form['sort_by'] == 'date':
+        #sort newest/oldest first based on user choice
+        date_sort_newest_first = bool(int(request.form['date_sort_newest_first']))
+        transactions_sorted = sort_by_date(transactions, date_sort_newest_first)
+        amount_sort_highest_first = True
+
+    elif request.form['sort_by'] == 'amount':
+        #sort high-low or low-high based on user choice
+        amount_sort_highest_first = bool(int(request.form['amount_sort_highest_first']))
+        transactions_sorted = sort_by_amount(transactions, amount_sort_highest_first)
+        date_sort_newest_first = True
 
     return render_template("transactions/index.html", title='My Transactions', transactions_sorted=transactions_sorted, transactions_total=transactions_total, date_sort_newest_first=date_sort_newest_first, amount_sort_highest_first=amount_sort_highest_first)
 

@@ -16,3 +16,5 @@ def sort_by_date(transactions, newest_first=True):
 #sort transactions by amount
 def sort_by_amount(transactions, highest_first=True):
     return sorted(transactions, key= lambda h: h.amount, reverse=highest_first)
+
+#filter by merchant
