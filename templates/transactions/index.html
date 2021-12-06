@@ -9,7 +9,7 @@
             <th>Transactions - Total: {{ '£{:,.2f}'.format(transactions_total) }}</th>
         </tr>
         <tr>
-            Sort by:
+            Sort by:<br>
             <form action="/transactions/sort" method="post">
                 <label for="date_sort_newest_first">Date</label>
                 <select name="date_sort_newest_first" id="date_sort_newest_first">
@@ -34,6 +34,10 @@
                 </select>
                 <button name="sort_by" type="submit" value="amount">Sort</button>
             </form> 
+        </tr>
+        <tr>
+            Filter by:<br>
+            
         </tr>
         {% for transaction in transactions_sorted %}
             <tr>
