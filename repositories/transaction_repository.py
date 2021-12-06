@@ -58,7 +58,7 @@ def select(id):
 
 #read by merchant
 def select_by_merchant(merchant_id):
-    transactions = None
+    transactions = []
 
     #sql query and merchant_id value
     sql = "SELECT * FROM transactions WHERE merchant_id = %s"
@@ -71,12 +71,13 @@ def select_by_merchant(merchant_id):
     #if exists, return list of transaction objects
     for row in results:
         tag = tag_repository.select(row['tag_id'])
-        transaction = Transaction(merchant, tag, row['amount'], row['date'], row['time'], row['id'])
+        transaction = Transaction(merchant, tag, row['amount'], row['transaction_date'], row['transaction_time'], row['id'])
         transactions.append(transaction)
+    return transactions
 
 #read by tag
 def select_by_tag(tag_id):
-    transactions = None
+    transactions = []
 
     #sql query and merchant_id value
     sql = "SELECT * FROM transactions WHERE tag_id = %s"
@@ -89,9 +90,9 @@ def select_by_tag(tag_id):
     #if exists, return list of transaction objects
     for row in results:
         merchant = merchant_repository.select(row['merchant_id'])
-        transaction = Transaction(merchant, tag, row['amount'], row['date'], row['time'], row['id'])
+        transaction = Transaction(merchant, tag, row['amount'], row['transaction_date'], row['transaction_time'], row['id'])
         transactions.append(transaction)
-
+    return transactions
 
 #update transaction
 def update(transaction):

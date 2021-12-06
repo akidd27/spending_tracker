@@ -1,4 +1,5 @@
 import repositories.transaction_repository as transaction_repository
+import datetime
 
 #return sum of amounts in given list of transactions
 def total_of_transactions(transactions):
@@ -24,6 +25,7 @@ def filter_by_tag(transactions, tag_id):
     if tag_id == "all":
         return transactions
     else:
+        tag_id = int(tag_id)
         filtered_transactions = []
         for transaction in transactions:
             if transaction.tag.id == tag_id:

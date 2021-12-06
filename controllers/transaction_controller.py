@@ -16,7 +16,7 @@ date_sort_newest_first = True
 
 #show all transactions
 @transactions_blueprint.route("/transactions")
-def transactions():
+def all_transactions():
     #get transactions
     transactions = transaction_repository.select_all()
     transactions_sorted = sort_by_date(transactions)
@@ -105,8 +105,27 @@ def select_filters():
     transactions_total = total_of_transactions(transactions)
     default_date = datetime.datetime.now().date()
 
-    return render_template('transactions/filter.html', title="Select Filters", merchants=merchants, tags=tags, transactions_sorted=transactions_sorted, transactions_total=transactions_total, default_date=default_date)
+    return render_template('transactions/filter.html', title="Select Filters", merchants=merchants, tags=tags, transactions_sorted=transactions_sorted, transactions_total=transactions_total)
+
+#show filtered results
+@transactions_blueprint.route('/transactions/filter', methods=['POST'])
+def filtered_transactions():
+
+    #convert date strings to date objects
+    start_date = datetime.date.fromisoformat(request.form['start_date'])
+    end_date = datetime.date.fromisoformat(request.form['end_date'])
+
+    transactions_sorted = filter_and_sort(request.form['merchant_id'], request.form['tag_id'], start_date, end_date, request.form['sort_by'])
+
+    merchants = merchant_repository.select_all()
+    tags = tag_repository.select_all()
+
+    transactions_total = total_of_transactions(transactions_sorted)
+
+    return render_template('transactions/filter.html', title="Results", merchants=merchants, tags=tags, transactions_sorted=transactions_sorted, transactions_total=transactions_total)
 
 #To-do
 #fix tr and tds in all index.html files
+#default dates for filter
+#change "all" form values to int
 #CSS
