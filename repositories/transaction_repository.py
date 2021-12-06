@@ -57,13 +57,16 @@ def select(id):
     return transaction
 
 #read by merchant
-def select_by_merchant(merchant):
+def select_by_merchant(merchant_id):
     transactions = None
 
     #sql query and merchant_id value
     sql = "SELECT * FROM transactions WHERE merchant_id = %s"
-    values = [merchant.id]
+    values = [merchant_id]
     results = run_sql(sql, values)
+
+    #merchant is same for all results, so create outside loop
+    merchant = merchant_repository.select(merchant_id)
 
     #if exists, return list of transaction objects
     for row in results:
@@ -72,13 +75,16 @@ def select_by_merchant(merchant):
         transactions.append(transaction)
 
 #read by tag
-def select_by_tag(tag):
+def select_by_tag(tag_id):
     transactions = None
 
     #sql query and merchant_id value
     sql = "SELECT * FROM transactions WHERE tag_id = %s"
-    values = [tag.id]
+    values = [tag_id]
     results = run_sql(sql, values)
+
+    #tag is same for all results, so create outside loop
+    tag = tag_repository.select(tag_id)
 
     #if exists, return list of transaction objects
     for row in results:

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="/transactions/filter" method="post">
+    <label for="merchant">Merchant:</label>
+    <select name="merchant" id="merchant" required>
+        <option value="all">All</option>
+        {% for merchant in merchants %}
+            <option value="{{ merchant.id }}">{{ merchant.name }}</option>
+        {% endfor %}
+    </select><br>
+    <label for="tag">Tag:</label>
+    <select name="tag" id="tag" required>
+        <option value="all">All</option>
+        {% for tag in tags %}
+            <option value="{{ tag.id }}">{{ tag.name }}</option>
+        {% endfor %}
+    </select><br>
+    <label for="date_range">Date Range (leave blank for all dates):</label><br>
+    From: <input type="date" id="start_date" name="start_date" value="all" required>
+    To: <input type="date" id="end_date" name="end_date" value="all" required><br>
+    <label for="sort_by">Sort By:</label>
+    <select name="sort_by" id="sort_by" required>
+        <option value="date_newest_first">Date: Newest First</option>
+        <option value="date_oldest_first">Date: Oldest First</option>
+        <option value="amount_highest_first">Amount: High to Low</option>
+        <option value="amount_lowest_first">Amount: Low to High</option>
+    </select>
+    <button name="filter" type="submit">Filter</button>
+</form>
+<table>
+    <th>Transactions - Total: {{ '£{:,.2f}'.format(transactions_total) }}</th>
+    {% for transaction in transactions_sorted %}
+    <tr>
+        <td>
+            {{ transaction.merchant.name }} {{ transaction.tag.name }} {{ '£{:,.2f}'.format(transaction.amount) }} {{ transaction.date }} {{ transaction.time }}
+            <a href="/transactions/{{transaction.id}}">Edit</a>
+        </td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock content %}

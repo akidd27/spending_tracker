@@ -90,3 +90,23 @@ def update_transaction(id):
     transaction.time = request.form['time']
     transaction_repository.update(transaction)
     return redirect('/transactions')
+
+#choose filter options
+@transactions_blueprint.route('/transactions/filter')
+def select_filters():
+    merchants = merchant_repository.select_all()
+    tags = tag_repository.select_all()
+
+    #get transactions
+    transactions = transaction_repository.select_all()
+    transactions_sorted = sort_by_date(transactions)
+
+    #get total of all transactions
+    transactions_total = total_of_transactions(transactions)
+    default_date = datetime.datetime.now().date()
+
+    return render_template('transactions/filter.html', title="Select Filters", merchants=merchants, tags=tags, transactions_sorted=transactions_sorted, transactions_total=transactions_total, default_date=default_date)
+
+#To-do
+#fix tr and tds in all index.html files
+#CSS
