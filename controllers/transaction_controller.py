@@ -84,3 +84,29 @@ def sort_transactions():
         date_sort_newest_first = True
 
     return render_template("transactions/index.html", title='My Transactions', transactions_sorted=transactions_sorted, transactions_total=transactions_total, date_sort_newest_first=date_sort_newest_first, amount_sort_highest_first=amount_sort_highest_first)
+
+#View individual transaction to edit or delete
+@transactions_blueprint.route('/transactions/<id>')
+def edit_transaction(id):
+    transaction = transaction_repository.select(id)
+    merchants = merchant_repository.select_all()
+    tags = tag_repository.select_all()
+    return render_template('transactions/edit.html', title=f"Transaction {transaction.id}", transaction=transaction, merchants=merchants, tags=tags)
+
+#delete transaction
+@transactions_blueprint.route('/transactions/<id>/delete', methods=['POST'])
+def delete_transaction(id):
+    transaction_repository.delete(id)
+    return redirect('/transactions')
+
+#update transaction from form data
+@transactions_blueprint.route('/transactions/<id>/edit', methods=['POST'])
+def update_transaction(id):
+    transaction = transaction_repository.select(id)
+    transaction.merchant = merchant_repository.select(request.form['merchant_id'])
+    transaction.tag = tag_repository.select(request.form['tag_id'])
+    transaction.amount = request.form['amount']
+    transaction.date = request.form['date']
+    transaction.time = request.form['time']
+    transaction_repository.update(transaction)
+    return redirect('/transactions')
