@@ -22,7 +22,8 @@ def sort_by_amount(transactions, highest_first=True):
 
 #filter list by tag
 def filter_by_tag(transactions, tag_id):
-    if tag_id == "all":
+    if tag_id == 0:
+        #0 signifies select all
         return transactions
     else:
         tag_id = int(tag_id)
@@ -47,7 +48,8 @@ def filter_by_date_range(transactions, start_date, end_date):
 #get transactions, then filter and sort
 def filter_and_sort(merchant_id, tag_id, start_date, end_date, sort_by):
     #get transactions by merchant
-    if merchant_id == "all":
+    if merchant_id == 0:
+        #0 signifies select all
         transactions_by_merchant = transaction_repository.select_all()
     else:
         transactions_by_merchant = transaction_repository.select_by_merchant(merchant_id)
@@ -59,13 +61,16 @@ def filter_and_sort(merchant_id, tag_id, start_date, end_date, sort_by):
     transactions_by_merchant_tag_date = filter_by_date_range(transactions_by_merchant_tag, start_date, end_date)
 
     #sort
-    if sort_by[0] == "d":
-        #by date
-        newest_first = sort_by[5] == "n"
-        filtered_transactions = sort_by_date(transactions_by_merchant_tag_date, newest_first)
-    elif sort_by[0] == "a":
-        #by amount
-        highest_first = sort_by[7] == "h"
-        filtered_transactions = sort_by_amount(transactions_by_merchant_tag_date, highest_first)
-
+    if sort_by == 0:
+        #by date newest first
+        filtered_transactions = sort_by_date(transactions_by_merchant_tag_date)
+    elif sort_by == 1:
+        #by date oldest first
+        filtered_transactions = sort_by_date(transactions_by_merchant_tag_date, False)
+    elif sort_by == 2:
+        #by amount high to low
+        filtered_transactions = sort_by_amount(transactions_by_merchant_tag_date)
+    elif sort_by == 3:
+        #by amount low to high
+        filtered_transactions = sort_by_amount(transactions_by_merchant_tag_date), False
     return filtered_transactions

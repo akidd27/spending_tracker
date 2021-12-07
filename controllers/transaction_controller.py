@@ -114,8 +114,11 @@ def filtered_transactions():
     #convert date strings to date objects
     start_date = datetime.date.fromisoformat(request.form['start_date'])
     end_date = datetime.date.fromisoformat(request.form['end_date'])
+    tag_id = int(request.form['tag_id'])
+    merchant_id = int(request.form['merchant_id'])
+    sort_by = int(request.form['sort_by'])
 
-    transactions_sorted = filter_and_sort(request.form['merchant_id'], request.form['tag_id'], start_date, end_date, request.form['sort_by'])
+    transactions_sorted = filter_and_sort(merchant_id, tag_id, start_date, end_date, sort_by)
 
     merchants = merchant_repository.select_all()
     tags = tag_repository.select_all()
@@ -127,5 +130,4 @@ def filtered_transactions():
 #To-do
 #fix tr and tds in all index.html files
 #default dates for filter
-#change "all" form values to int
 #CSS
