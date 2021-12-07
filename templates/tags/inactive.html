@@ -9,6 +9,8 @@
             <tr>
                 <td>
                     {{ inactive_tag.name }}
+                </td>
+                <td>
                     <form action="/tags/{{inactive_tag.id}}/activate" class="activate" method="POST">
                         <button class="activate-button">Activate</button>
                     </form>

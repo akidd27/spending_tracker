@@ -2,37 +2,88 @@
 
 {% block content %}
 
-<form action="/transactions/filter" method="post">
-    <label for="merchant_id">Merchant:</label>
-    <select name="merchant_id" id="merchant_id" required>
-        <option value=0>All</option>
-        {% for merchant in merchants %}
-            <option value="{{ merchant.id }}">{{ merchant.name }}</option>
-        {% endfor %}
-    </select><br>
-    <label for="tag_id">Tag:</label>
-    <select name="tag_id" id="tag_id" required>
-        <option value=0>All</option>
-        {% for tag in tags %}
-            <option value="{{ tag.id }}">{{ tag.name }}</option>
-        {% endfor %}
-    </select><br>
-    Date Range:<br>
-    <label for="start_date">From:</label>
-    <input type="date" id="start_date" name="start_date" required><br>
-    <label for="end_date">To:</label>
-    <input type="date" id="end_date" name="end_date" required><br>
-    <label for="sort_by">Sort By:</label>
-    <select name="sort_by" id="sort_by" required>
-        <option value=0>Date: Newest First</option>
-        <option value=1>Date: Oldest First</option>
-        <option value=2>Amount: High to Low</option>
-        <option value=3>Amount: Low to High</option>
-    </select><br>
-    <button name="filter" type="submit">Filter</button>
-</form>
-<table>
-    <th>Transactions - Total: {{ '£{:,.2f}'.format(transactions_total) }}</th>
+<table class="filter">
+    <form action="/transactions/filter" method="post">
+        <tr>
+            <td>
+                <label for="merchant_id">Merchant:</label>
+            </td>
+            <td>
+                <select name="merchant_id" id="merchant_id" required>
+                    <option value=0>All</option>
+                    {% for merchant in merchants %}
+                        <option value="{{ merchant.id }}">{{ merchant.name }}</option>
+                    {% endfor %}
+                </select><br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="tag_id">Tag:</label>
+            </td>
+            <td>
+                <select name="tag_id" id="tag_id" required>
+                    <option value=0>All</option>
+                    {% for tag in tags %}
+                        <option value="{{ tag.id }}">{{ tag.name }}</option>
+                    {% endfor %}
+                </select><br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="start_date">From:</label>
+            </td>
+            <td>
+                <input type="date" id="start_date" name="start_date" required><br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="end_date">To:</label>
+            </td>
+            <td>
+                <input type="date" id="end_date" name="end_date" required><br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="sort_by">Sort By:</label>
+            </td>
+            <td>
+                <select name="sort_by" id="sort_by" required>
+                    <option value=0>Date: Newest First</option>
+                    <option value=1>Date: Oldest First</option>
+                    <option value=2>Amount: High to Low</option>
+                    <option value=3>Amount: Low to High</option>
+                </select><br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button name="filter" type="submit">Filter</button>
+            </td>
+        </tr>
+    </form>
+</table>
+<table class="transaction-table">
+    <tr>
+        <th>
+            Merchant 
+        </th>
+        <th>
+            Tag
+        </th>
+        <th>
+            Total: {{ '£{:,.2f}'.format(transactions_total) }}
+        </th>
+        <th>
+            Date
+        </th>
+        <th>
+            Time
+        </th>
+    </tr>
     {% for transaction in transactions_sorted %}
     <tr>
         <td>{{ transaction.merchant.name }}</td>
@@ -40,7 +91,7 @@
         <td>{{ '£{:,.2f}'.format(transaction.amount) }}</td>
         <td>{{ transaction.date }}</td>
         <td>{{ transaction.time }}</td>
-        <td><a href="/transactions/{{transaction.id}}">Edit</a></td>
+        <td><a href="/transactions/{{transaction.id}}" class="edit-button">Edit</a></td>
     </tr>
 {% endfor %}
 </table>

@@ -1,23 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    
+<table class="form-table">
 <form action="/tags/{{tag.id}}" method="post">
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name" placeholder="e.g. Groceries" value="{{tag.name}}">
-    </div>
-    <button type="submit">Save Changes</button>
+    <tr>
+        <td>
+            <label for="name">Name:</label>
+        </td>
+        <td>
+            <input type="text" name="name" id="name" placeholder="e.g. Groceries" value="{{tag.name}}">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button type="submit">Save Changes</button>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <form class="delete" action="/tags/{{tag.id}}/delete" method="POST">
+                <button class="trash-button">Delete</button>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <form action="/tags/{{tag.id}}/deactivate" class="deactivate" method="POST">
+                <button class="deactivate-button">Deactivate</button>
+            </form>
+        </td>
+    </tr>
 </form>
-<li>
-    <form class="delete" action="/tags/{{tag.id}}/delete" method="POST">
-        <button class="trash-button">Delete</button>
-    </form>
-</li>
-<li>
-    <form action="/tags/{{tag.id}}/deactivate" class="deactivate" method="POST">
-        <button class="deactivate-button">Deactivate</button>
-    </form>
-</li>
+</table>  
 
 {% endblock content %}

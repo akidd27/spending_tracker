@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    
-<form action="/tags" method="post">
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name" placeholder="e.g. Groceries">
-    </div>
-    <button type="submit">Add Tag</button>
-</form>
-
+<table class="form-table">
+    <form action="/tags" method="post">
+        <tr>
+            <td>
+                <label for="name">Name:</label>
+            </td>
+            <td>
+                <input type="text" name="name" id="name" placeholder="e.g. Groceries">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit">Add Tag</button>
+            </td>
+        </tr>
+    </form>
+</table>
 {% endblock content %}

@@ -1,10 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <ul>
-        <li><a href="/tags/new">Add New Tag</a></li>
-        <li><a href="/tags/inactive">Inactive Tags</a></li>
-    </ul>
     <table class="tag-table">
         <tr>
             <th>Tags</th>
@@ -13,9 +9,15 @@
             <tr>
                 <td>
                     {{ active_tag.name }}
-                    <a href="/tags/{{active_tag.id}}">Edit</a>
+                </td>
+                <td>
+                    <a href="/tags/{{active_tag.id}}" class="edit-button">Edit</a>
                 </td>
             </tr>
         {% endfor %}
     </table>
+    <ul>
+        <li><a href="/tags/new">Add New Tag</a></li>
+        <li><a href="/tags/inactive">Inactive Tags</a></li>
+    </ul>
 {% endblock content %}

@@ -9,6 +9,8 @@
             <tr>
                 <td>
                     {{ inactive_merchant.name }}
+                </td>
+                <td>
                     <form action="/merchants/{{inactive_merchant.id}}/activate" class="activate" method="POST">
                         <button class="activate-button">Activate</button>
                     </form>

@@ -1,13 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    
-<form action="/merchants" method="post">
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name" placeholder="e.g. Tesco">
-    </div>
-    <button type="submit">Add Merchant</button>
-</form>
+
+<table class="form-table">
+    <form action="/merchants" method="post">
+        <tr>
+            <td>
+                <label for="name">Name:</label>
+            </td>
+            <td>
+                <input type="text" name="name" id="name" placeholder="e.g. Tesco">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit">Add Merchant</button>
+            </td>
+        </tr>
+    </form>
+</table>
 
 {% endblock content %}

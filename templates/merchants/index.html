@@ -1,10 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <ul>
-        <li><a href="/merchants/new">Add New Merchant</a></li>
-        <li><a href="/merchants/inactive">Inactive Merchants</a></li>
-    </ul>
     <table class="merchant-table">
         <tr>
             <th>Merchants</th>
@@ -13,9 +9,15 @@
             <tr>
                 <td>
                     {{ active_merchant.name }}
-                    <a href="/merchants/{{active_merchant.id}}">Edit</a>
+                </td>
+                <td>
+                    <a href="/merchants/{{active_merchant.id}}" class="edit-button">Edit</a>
                 </td>
             </tr>
         {% endfor %}
     </table>
+    <ul>
+        <li><a href="/merchants/new">Add New Merchant</a></li>
+        <li><a href="/merchants/inactive">Inactive Merchants</a></li>
+    </ul>
 {% endblock content %}

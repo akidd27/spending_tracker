@@ -1,23 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    
-<form action="/merchants/{{merchant.id}}" method="post">
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name" placeholder="e.g. Tesco" value="{{merchant.name}}">
-    </div>
-    <button type="submit">Save Changes</button>
-</form>
-<li>
-    <form class="delete" action="/merchants/{{merchant.id}}/delete" method="POST">
-        <button class="trash-button">Delete</button>
+
+<table class="form-table">
+    <form action="/merchants/{{merchant.id}}" method="post">
+        <tr>
+            <td>
+                <label for="name">Name:</label>
+            </td>
+            <td>
+                <input type="text" name="name" id="name" placeholder="e.g. Tesco" value="{{merchant.name}}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit">Save Changes</button>
+            </td>
+        </tr>
     </form>
-</li>
-<li>
-    <form action="/merchants/{{merchant.id}}/deactivate" class="deactivate" method="POST">
-        <button class="deactivate-button">Deactivate</button>
-    </form>
-</li>
+    <tr>
+        <form class="delete" action="/merchants/{{merchant.id}}/delete" method="POST">
+            <td>
+                <button class="trash-button">Delete</button>
+            </td>
+        </form>
+    </tr>
+    <tr>
+        <form action="/merchants/{{merchant.id}}/deactivate" class="deactivate" method="POST">
+            <td>
+                <button class="deactivate-button">Deactivate</button>
+            </td>
+        </form>
+    </tr>
+</table>
 
 {% endblock content %}

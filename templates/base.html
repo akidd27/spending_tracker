@@ -4,13 +4,15 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     </head>
     <body>
-        <h1>{{ title }}</h1>
+        <header>
+            <h1>{{ title }}</h1>
+        </header>
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/transactions">Transactions</a></li>
-                <li><a href="/merchants">Merchants</a></li>
-                <li><a href="/tags">Tags</a></li>
+                <li><a href="/transactions">My Transactions</a></li>
+                <li><a href="/merchants">My Merchants</a></li>
+                <li><a href="/tags">My Tags</a></li>
             </ul>
         </nav>
         {% block content %}
