@@ -46,7 +46,7 @@
                 <label for="date">Date:</label>
             </td>
             <td>
-                <input type="date" id="date" name="date" value="{{ transaction.date }}" required>
+                <input type="date" id="date" name="date" value="{{ transaction.date }}" min="1000-01-01" max="9999-01-01" required>
             </td>
         </tr>
         <tr>

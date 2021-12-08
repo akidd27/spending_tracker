@@ -126,8 +126,3 @@ def filtered_transactions():
     transactions_total = total_of_transactions(transactions_sorted)
 
     return render_template('transactions/filter.html', title="Results", merchants=merchants, tags=tags, transactions_sorted=transactions_sorted, transactions_total=transactions_total)
-
-#To-do
-#fix tr and tds in all index.html files
-#default dates for filter
-#CSS

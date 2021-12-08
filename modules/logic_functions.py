@@ -72,5 +72,5 @@ def filter_and_sort(merchant_id, tag_id, start_date, end_date, sort_by):
         filtered_transactions = sort_by_amount(transactions_by_merchant_tag_date)
     elif sort_by == 3:
         #by amount low to high
-        filtered_transactions = sort_by_amount(transactions_by_merchant_tag_date), False
+        filtered_transactions = sort_by_amount(transactions_by_merchant_tag_date, False)
     return filtered_transactions

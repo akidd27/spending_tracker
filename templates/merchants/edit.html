@@ -19,13 +19,6 @@
         </tr>
     </form>
     <tr>
-        <form class="delete" action="/merchants/{{merchant.id}}/delete" method="POST">
-            <td>
-                <button class="trash-button">Delete</button>
-            </td>
-        </form>
-    </tr>
-    <tr>
         <form action="/merchants/{{merchant.id}}/deactivate" class="deactivate" method="POST">
             <td>
                 <button class="deactivate-button">Deactivate</button>
